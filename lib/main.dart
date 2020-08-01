@@ -13,7 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: title,
-      theme: ThemeData(primarySwatch: Colors.red, hintColor: Colors.white30),
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+        hintColor: Colors.white30,
+      ),
       //home: RandomWords(),
 
       home: MyHomePage(title: 'Flutter Login'),
