@@ -5,7 +5,7 @@ class NavDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.only(
-          topRight: Radius.circular(60), bottomRight: Radius.circular(60)),
+          topRight: Radius.circular(50), bottomRight: Radius.circular(50)),
       child: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,

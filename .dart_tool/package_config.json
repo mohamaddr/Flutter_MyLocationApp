@@ -56,10 +56,34 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_dotenv",
+      "rootUri": "file:///Users/dergham/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_dotenv-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///Users/dergham/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/dergham/flutter/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "2.2"
+    },
+    {
+      "name": "google_maps_flutter",
+      "rootUri": "file:///Users/dergham/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-0.5.28+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "google_maps_flutter_platform_interface",
+      "rootUri": "file:///Users/dergham/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_platform_interface-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "matcher",
@@ -78,6 +102,12 @@
       "rootUri": "file:///Users/dergham/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.7.0",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "plugin_platform_interface",
+      "rootUri": "file:///Users/dergham/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
     },
     {
       "name": "sky_engine",
@@ -102,6 +132,12 @@
       "rootUri": "file:///Users/dergham/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "stream_transform",
+      "rootUri": "file:///Users/dergham/flutter/flutter/.pub-cache/hosted/pub.dartlang.org/stream_transform-1.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
     },
     {
       "name": "string_scanner",
@@ -140,7 +176,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2020-08-01T13:21:27.064266Z",
+  "generated": "2020-08-02T00:26:21.983783Z",
   "generator": "pub",
   "generatorVersion": "2.9.0-3.0.dev.flutter-b0d35855d8"
 }

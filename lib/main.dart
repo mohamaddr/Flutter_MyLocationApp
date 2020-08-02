@@ -1,16 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'SideMenu.dart';
+import 'map.dart';
+//import 'package:credentials_helper/credentials_helper.dart';
 
-void main() => runApp(MyApp());
+// void main() {
+//   // Credentials credentials = Credentials.fromFile('/credentials.json');
+
+//   runApp(MyApp());
+//   //print("JJJJJJJ" + credentials.apiKey);
+// }
+
+void main() async {
+  await DotEnv().load('.env');
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // #docregion build
+
   final title = 'Startup Name Generator';
   @override
   Widget build(BuildContext context) {
+    print("mykey" + DotEnv().env['MAPS_API_KEY']);
     return MaterialApp(
       title: title,
       theme: ThemeData(
@@ -69,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => RandomWords()),
+            MaterialPageRoute(builder: (context) => MyMap()),
           );
         },
         child: Text("Login",
