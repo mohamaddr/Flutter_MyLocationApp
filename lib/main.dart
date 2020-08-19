@@ -15,7 +15,7 @@ import 'map.dart';
 // }
 
 void main() async {
-  await DotEnv().load('.env');
+  //await DotEnv().load('.env');
   runApp(MyApp());
 }
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   final title = 'Startup Name Generator';
   @override
   Widget build(BuildContext context) {
-    print("mykey" + DotEnv().env['MAPS_API_KEY']);
+    // print("mykey" + DotEnv().env['MAPS_API_KEY']);
     return MaterialApp(
       title: title,
       theme: ThemeData(
@@ -58,9 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(0, 5, 5, -5),
-          hintText: "Email",
-          enabledBorder: new UnderlineInputBorder(
-              borderSide: new BorderSide(color: Colors.white30))
+          hintText: 'Email',
+          enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white30))
 
           //border: OutlineInputBorder()
           ),
