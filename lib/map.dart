@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class MyMap extends StatefulWidget {
 
 class _MyAppState extends State<MyMap> {
   final Map<String, Marker> _markers = {};
+
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final googleOffices = await locations.getGoogleOffices();
     setState(() {
@@ -28,16 +31,39 @@ class _MyAppState extends State<MyMap> {
             snippet: office.address,
           ),
         );
-        _markers[office.name] = marker;
+        //_markers[office.name] = marker;
       }
     });
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  void _currentLocation() async {
+    var currentLocation = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
 
-  // Copyright 2019 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+    setState(() {
+      _markers.clear();
+      final marker = Marker(
+        markerId: MarkerId('curr_loc'),
+        position: LatLng(currentLocation.latitude, currentLocation.longitude),
+        infoWindow: InfoWindow(title: 'Your Location'),
+      );
+      _markers['Current Location'] = marker;
+    });
+    print(currentLocation.latitude);
+    print(currentLocation.longitude);
+  }
+
+  MapType _currentMapType = MapType.normal;
+
+  void _onMapTypeButtonPressed() {
+    setState(() {
+      _currentMapType = _currentMapType == MapType.normal
+          ? MapType.satellite
+          : MapType.normal;
+    });
+  }
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -45,90 +71,45 @@ class _MyAppState extends State<MyMap> {
       home: Scaffold(
         key: _scaffoldKey,
         drawer: NavDrawer(),
-
-        // floatingActionButton: Container(
-        //   height: 400,
-        //   width: 70,
-        //   child: Align(
-        //     alignment: Alignment.centerLeft,
-        //     child: Transform.scale(
-        //       scale: 1.8,
-        //       child: RaisedButton(
-        //         elevation: 15.0,
-        //         onPressed: () {
-        //           _scaffoldKey.currentState.openDrawer();
-        //         },
-        //         child: Icon(
-        //           Icons.menu,
-        //           size: 23,
-        //         ),
-        //         color: Colors.red[400],
-        //         padding: EdgeInsets.only(left: (35)),
-        //         shape: RoundedRectangleBorder(
-        //           borderRadius: BorderRadius.only(
-        //             topRight: Radius.circular(30.0),
-        //             bottomRight: Radius.circular(30.0),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
-
-        //  decoration: BoxDecoration(
-        //       borderRadius: BorderRadius.only(
-        //           topRight: Radius.circular(35.0),
-        //           bottomRight: Radius.circular(35.0)),
-        //       border: Border.all(
-        //           width: 3, color: Colors.green, style: BorderStyle.solid)),
-
-        //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-
-        // body:GoogleMap(
-        //   onMapCreated: _onMapCreated,
-        //   initialCameraPosition: CameraPosition(
-        //     target: const LatLng(0, 0),
-        //     zoom: 2,
-        //   ),
-        //   markers: _markers.values.toSet(),
-
-        // ),
         body: Stack(
           children: <Widget>[
             GoogleMap(
+              //myLocationEnabled: true,
+              myLocationButtonEnabled: false,
+              mapType: _currentMapType,
               onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(
                 target: const LatLng(0, 0),
-                zoom: 2,
+                zoom: 3,
               ),
               markers: _markers.values.toSet(),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: FloatingActionButton(
-                  onPressed: () => print('button pressed'),
-                  materialTapTargetSize: MaterialTapTargetSize.padded,
-                  backgroundColor: Colors.red[400],
-                  child: const Icon(Icons.map, size: 36.0),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(16.0),
+            //   child: Align(
+            //     alignment: Alignment.topRight,
+            //     child: FloatingActionButton(
+            //       onPressed: () => print('button pressed'),
+            //       materialTapTargetSize: MaterialTapTargetSize.padded,
+            //       backgroundColor: Colors.red[400],
+            //       child: const Icon(Icons.map, size: 36.0),
+            //     ),
+            //   ),
+            // ),
             // to customize the position of the weidght, we use Positioned
             Positioned(
-              bottom: 210,
-              height: 75, // Horizontal positioning
-              width: 75,
+              bottom: 300,
+              height: 70, // Horizontal positioning
+              width: 70,
               child: RaisedButton(
-                elevation: 15.0,
+                elevation: 17.0,
                 padding: const EdgeInsets.all(16.0),
                 onPressed: () {
-                  _scaffoldKey.currentState.openDrawer();
+                  _onMapTypeButtonPressed();
                 },
                 child: Icon(
-                  Icons.menu,
-                  size: 20,
+                  Icons.layers,
+                  size: 25,
                 ),
                 color: Colors.red[400],
                 shape: RoundedRectangleBorder(
@@ -139,6 +120,96 @@ class _MyAppState extends State<MyMap> {
                 ),
               ),
             ),
+            Positioned(
+              bottom: 100,
+              height: 70, // Horizontal positioning
+              width: 70,
+              child: RaisedButton(
+                elevation: 20.0,
+                padding: const EdgeInsets.all(16.0),
+                onPressed: () {
+                  _scaffoldKey.currentState.openDrawer();
+                },
+                child: Icon(
+                  Icons.menu,
+                  size: 25,
+                ),
+                color: Colors.red[400],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(30.0),
+                    bottomRight: Radius.circular(30.0),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 200,
+              height: 70, // Horizontal positioning
+              width: 70,
+              right: 0,
+              child: RaisedButton(
+                elevation: 20.0,
+                padding: const EdgeInsets.all(16.0),
+                onPressed: _currentLocation,
+                child: Icon(
+                  Icons.location_on,
+                  size: 25,
+                ),
+                color: Colors.red[400],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    bottomLeft: Radius.circular(30.0),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 100,
+              height: 70, // Horizontal positioning
+              width: 70,
+              right: 0,
+              child: RaisedButton(
+                elevation: 20.0,
+                padding: const EdgeInsets.all(16.0),
+                onPressed: () {},
+                child: Icon(
+                  Icons.search,
+                  size: 25,
+                ),
+                color: Colors.red[400],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    bottomLeft: Radius.circular(30.0),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 300,
+              height: 70, // Horizontal positioning
+              width: 70,
+              right: 0,
+              child: RaisedButton(
+                elevation: 20.0,
+                padding: const EdgeInsets.all(16.0),
+                onPressed: () {},
+                child: Icon(
+                  Icons.directions,
+                  size: 25,
+                  // color: Colors.white,
+                ),
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    bottomLeft: Radius.circular(30.0),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
