@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,8 +18,9 @@ class MyMap extends StatefulWidget {
 //final LatLng _center = const LatLng(57.7089, 11.9746);
 
 class _MyAppState extends State<MyMap> {
+  GoogleMapController controller;
   final Map<String, Marker> _markers = {};
-
+  Completer<GoogleMapController> completer;
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final googleOffices = await locations.getGoogleOffices();
     setState(() {
@@ -31,12 +34,14 @@ class _MyAppState extends State<MyMap> {
             snippet: office.address,
           ),
         );
-        //_markers[office.name] = marker;
+        // _markers[office.name] = marker;
       }
     });
   }
 
   void _currentLocation() async {
+    //var controller = Completer<GoogleMapController>();
+
     var currentLocation = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
 
@@ -51,10 +56,19 @@ class _MyAppState extends State<MyMap> {
     });
     print(currentLocation.latitude);
     print(currentLocation.longitude);
+
+    await controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          bearing: 0,
+          target: LatLng(currentLocation.latitude, currentLocation.latitude),
+          zoom: 17.0,
+        ),
+      ),
+    );
   }
 
   MapType _currentMapType = MapType.normal;
-
   void _onMapTypeButtonPressed() {
     setState(() {
       _currentMapType = _currentMapType == MapType.normal
@@ -111,11 +125,11 @@ class _MyAppState extends State<MyMap> {
                   Icons.layers,
                   size: 25,
                 ),
-                color: Colors.red[400],
+                color: Colors.red[300],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0),
+                    topRight: Radius.circular(36.0),
+                    bottomRight: Radius.circular(36.0),
                   ),
                 ),
               ),
@@ -134,11 +148,11 @@ class _MyAppState extends State<MyMap> {
                   Icons.menu,
                   size: 25,
                 ),
-                color: Colors.red[400],
+                color: Colors.red[300],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0),
+                    topRight: Radius.circular(36.0),
+                    bottomRight: Radius.circular(36.0),
                   ),
                 ),
               ),
@@ -156,11 +170,11 @@ class _MyAppState extends State<MyMap> {
                   Icons.location_on,
                   size: 25,
                 ),
-                color: Colors.red[400],
+                color: Colors.red[300],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    bottomLeft: Radius.circular(30.0),
+                    topLeft: Radius.circular(36.0),
+                    bottomLeft: Radius.circular(36.0),
                   ),
                 ),
               ),
@@ -178,11 +192,11 @@ class _MyAppState extends State<MyMap> {
                   Icons.search,
                   size: 25,
                 ),
-                color: Colors.red[400],
+                color: Colors.red[300],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    bottomLeft: Radius.circular(30.0),
+                    topLeft: Radius.circular(36.0),
+                    bottomLeft: Radius.circular(36.0),
                   ),
                 ),
               ),
@@ -204,8 +218,8 @@ class _MyAppState extends State<MyMap> {
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    bottomLeft: Radius.circular(30.0),
+                    topLeft: Radius.circular(36.0),
+                    bottomLeft: Radius.circular(36.0),
                   ),
                 ),
               ),
