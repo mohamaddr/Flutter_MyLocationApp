@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -15,13 +14,13 @@ class MyMap extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-//final LatLng _center = const LatLng(57.7089, 11.9746);
-
 class _MyAppState extends State<MyMap> {
-  GoogleMapController controller;
   final Map<String, Marker> _markers = {};
-  Completer<GoogleMapController> completer;
+
+  GoogleMapController mapController;
+
   Future<void> _onMapCreated(GoogleMapController controller) async {
+    mapController = controller;
     final googleOffices = await locations.getGoogleOffices();
     setState(() {
       _markers.clear();
@@ -40,8 +39,6 @@ class _MyAppState extends State<MyMap> {
   }
 
   void _currentLocation() async {
-    //var controller = Completer<GoogleMapController>();
-
     var currentLocation = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
 
@@ -57,12 +54,13 @@ class _MyAppState extends State<MyMap> {
     print(currentLocation.latitude);
     print(currentLocation.longitude);
 
-    await controller.animateCamera(
+    await mapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
-          bearing: 0,
-          target: LatLng(currentLocation.latitude, currentLocation.latitude),
-          zoom: 17.0,
+          target: LatLng(currentLocation.latitude, currentLocation.longitude),
+          zoom: 15.0,
+          tilt: 50.0,
+          bearing: 45.0,
         ),
       ),
     );
