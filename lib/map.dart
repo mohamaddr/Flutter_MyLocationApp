@@ -14,7 +14,7 @@ class MyMap extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyMap> {
+class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
   final Map<String, Marker> _markers = {};
 
   GoogleMapController mapController;
@@ -38,6 +38,7 @@ class _MyAppState extends State<MyMap> {
     });
   }
 
+// Currentlocation
   void _currentLocation() async {
     var currentLocation = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
@@ -54,6 +55,7 @@ class _MyAppState extends State<MyMap> {
     print(currentLocation.latitude);
     print(currentLocation.longitude);
 
+    // Now move the camera postion to currentLocations
     await mapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -96,19 +98,6 @@ class _MyAppState extends State<MyMap> {
               ),
               markers: _markers.values.toSet(),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(16.0),
-            //   child: Align(
-            //     alignment: Alignment.topRight,
-            //     child: FloatingActionButton(
-            //       onPressed: () => print('button pressed'),
-            //       materialTapTargetSize: MaterialTapTargetSize.padded,
-            //       backgroundColor: Colors.red[400],
-            //       child: const Icon(Icons.map, size: 36.0),
-            //     ),
-            //   ),
-            // ),
-            // to customize the position of the weidght, we use Positioned
             Positioned(
               bottom: 300,
               height: 70, // Horizontal positioning
@@ -221,7 +210,66 @@ class _MyAppState extends State<MyMap> {
                   ),
                 ),
               ),
-            )
+            ),
+            Positioned(
+              bottom: 300,
+              height: 70, // Horizontal positioning
+              width: 70,
+              right: 0,
+              child: RaisedButton(
+                elevation: 20.0,
+                padding: const EdgeInsets.all(16.0),
+                onPressed: () {},
+                child: Icon(
+                  Icons.directions,
+                  size: 25,
+                  // color: Colors.white,
+                ),
+                // color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(36.0),
+                    bottomLeft: Radius.circular(36.0),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 1,
+              left: 114,
+              child: RaisedButton(
+                elevation: 90.0,
+                padding: const EdgeInsets.all(0.0),
+                onPressed: () {},
+                child: Container(
+                  alignment: Alignment.bottomCenter,
+
+                  height: 120, // Horizontal positioning
+                  width: 150,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.red[400], Colors.red[300]],
+                    ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(300.0),
+                      topRight: Radius.circular(300.0),
+                    ),
+                  ),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
+                  child: Icon(
+                    Icons.explore,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(300.0),
+                    topRight: Radius.circular(300.0),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
