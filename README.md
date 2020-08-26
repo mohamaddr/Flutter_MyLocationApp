@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 </head>
-
+<style>
   img {
   display: block;
   margin-left: auto;
