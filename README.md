@@ -1,4 +1,5 @@
-# myFlutterProjectUi
+<!DOCTYPE html>
+<html>
 </head>
 
   img {
@@ -17,7 +18,7 @@
 <img src="screan2_2.png" width="300" height="600"  >
 
 </body>
-
+</html>
 
 
 
