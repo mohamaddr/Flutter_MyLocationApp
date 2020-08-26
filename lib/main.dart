@@ -15,7 +15,7 @@ import 'map.dart';
 // }
 
 void main() async {
-  //await DotEnv().load('.env');
+  await DotEnv().load('.env');
   runApp(MyApp());
 }
 
@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
   final title = 'Startup Name Generator';
   @override
   Widget build(BuildContext context) {
-    // print("mykey" + DotEnv().env['MAPS_API_KEY']);
     return MaterialApp(
       title: title,
       theme: ThemeData(
