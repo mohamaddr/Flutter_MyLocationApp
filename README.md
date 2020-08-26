@@ -1,24 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-  img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
-</head>
-  
-<body> 
-<img src="screan1.png" width="300" height="600"  >
-  
-<img src="screan2.png" width="300" height="600"   >
+# MyFlutterProject
 
-<img src="screan2_2.png" width="300" height="600"  >
+<img src="screan1.png" width="400" height="700"  >
+  
+<img src="screan2.png" width="400" height="700"   >
 
-</body>
-</html>
+<img src="screan2_2.png" width="400" height="700"  >
+
 
 
 
