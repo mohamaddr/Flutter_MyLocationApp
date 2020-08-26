@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-</head>
-<style>
+<head>
+  <style>
   img {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 </style>
-<head>
+</head>
   
 <body> 
 <img src="screan1.png" width="300" height="600"  >
