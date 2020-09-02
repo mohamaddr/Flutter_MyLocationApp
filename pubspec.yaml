@@ -23,6 +23,8 @@ environment:
 
 dependencies:
   # flutter_config: ^1.0.7
+  expandable_bottom_bar: any
+  sliding_sheet: ^0.3.7
   flutter_dotenv: ^2.1.0
   flutter:
     sdk: flutter
