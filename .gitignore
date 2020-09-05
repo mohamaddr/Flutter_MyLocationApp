@@ -47,6 +47,8 @@ pubspec.lock
 **/ios/**/xcuserdata
 **/ios/.generated/
 **/ios/Flutter/App.framework
+**/ios/Flutter/Flutter 22.framework/Flutter
+**ios/Flutter/Flutter 22.framework/Headers
 **/ios/Flutter/Flutter.framework
 **/ios/Flutter/Generated.xcconfig
 **/ios/Flutter/app.flx
