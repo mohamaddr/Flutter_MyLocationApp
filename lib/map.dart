@@ -95,21 +95,35 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                       header: Text('My location list'),
                       children: [
                         // for (final item in myItems)
+
                         Card(
-                          color: Colors.red[300],
+                          color: Color(0xFF212121),
                           key: ValueKey('dd'),
                           child: ListTile(
-                            leading: Icon(Icons.location_pin),
-                            title: Text('data'),
+                            leading:
+                                Icon(Icons.location_pin, color: Colors.white),
+                            title: Text(
+                              'Welcome to Flutter Tutorial.',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            onTap: () => {},
                           ),
                         ),
                         Card(
-                          color: Colors.red[300],
+                          color: Color(0xFF212121),
                           key: ValueKey('dd'),
                           elevation: 2,
                           child: ListTile(
-                            leading: Icon(Icons.location_pin),
-                            title: Text('data'),
+                            leading:
+                                Icon(Icons.location_pin, color: Colors.white),
+                            title: Text(
+                              'Welcome to Flutter Tutorial.',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
                             onTap: () => {},
                           ),
                         ),
