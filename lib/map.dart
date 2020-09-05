@@ -70,10 +70,11 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
   }
 
   void showAsBottomSheet() async {
-    final result = await showSlidingBottomSheet(context, builder: (context) {
+    await showSlidingBottomSheet(context, builder: (context) {
       return SlidingSheetDialog(
-        elevation: 8,
-        cornerRadius: 16,
+        elevation: 10,
+        cornerRadius: 20,
+        shadowColor: Colors.grey.shade100,
         snapSpec: const SnapSpec(
           snap: true,
           snappings: [0.4, 0.7, 1.0],
@@ -81,6 +82,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
         ),
         builder: (context, state) {
           return Container(
+            width: double.infinity,
             height: 700,
             child: Center(
               child: Material(
@@ -88,9 +90,30 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   onTap: () => Navigator.pop(context, 'This is the result.'),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Text(
-                      'This is the content of the sheet',
-                      style: Theme.of(context).textTheme.body1,
+                    child: ReorderableListView(
+                      onReorder: (int oldIndex, int newIndex) {},
+                      header: Text('My location list'),
+                      children: [
+                        // for (final item in myItems)
+                        Card(
+                          color: Colors.red[300],
+                          key: ValueKey('dd'),
+                          child: ListTile(
+                            leading: Icon(Icons.location_pin),
+                            title: Text('data'),
+                          ),
+                        ),
+                        Card(
+                          color: Colors.red[300],
+                          key: ValueKey('dd'),
+                          elevation: 2,
+                          child: ListTile(
+                            leading: Icon(Icons.location_pin),
+                            title: Text('data'),
+                            onTap: () => {},
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -98,21 +121,48 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
             ),
           );
         },
-        headerBuilder: (context, state) {
-          return Container(
-            height: 40,
-            width: double.infinity,
-            alignment: Alignment.center,
-            child: Icon(
-              Icons.arrow_upward,
-              size: 15,
-            ),
-          );
-        },
+        // headerBuilder: (context, state) {
+        //   return Container(
+        //     width: double.infinity,
+        //     alignment: Alignment.center,
+        //     child: Icon(
+        //       Icons.arrow_upward,
+        //       size: 15,
+        //     ),
+        //   );
+        // },
       );
     });
+  }
 
-    print(result); // This is the result.
+  //slide function
+  void slideSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.50,
+        decoration: BoxDecoration(
+          color: Colors.grey[850],
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(36), topRight: Radius.circular(36)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[Text('Row1')],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[Text('Row2')],
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   MapType _currentMapType = MapType.normal;
@@ -129,6 +179,12 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        // Define the default brightness and colors.
+        brightness: Brightness.dark,
+        primaryColor: Color(0xFF212121),
+        accentColor: Colors.cyan[600],
+      ),
       home: Scaffold(
         key: _scaffoldKey,
         drawer: NavDrawer(),
@@ -147,7 +203,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
             ),
             // Without a button
             // SlidingSheet(
-            //   color: Colors.blueAccent,
+            //   color: Colors.black.withRed(12),
             //   elevation: 8,
             //   cornerRadius: 16,
             //   snapSpec: const SnapSpec(
@@ -200,11 +256,8 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                 onPressed: () {
                   _onMapTypeButtonPressed();
                 },
-                child: Icon(
-                  Icons.layers,
-                  size: 25,
-                ),
-                color: Colors.red[300],
+                child: Icon(Icons.layers, size: 25, color: Colors.white),
+                color: Color(0xFF212121),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(36.0),
@@ -227,7 +280,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   Icons.menu,
                   size: 25,
                 ),
-                color: Colors.red[300],
+                color: Color(0xFF212121),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(36.0),
@@ -249,7 +302,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   Icons.location_on,
                   size: 25,
                 ),
-                color: Colors.red[300],
+                color: Color(0xFF212121),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(36.0),
@@ -271,7 +324,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   Icons.search,
                   size: 25,
                 ),
-                color: Colors.red[300],
+                color: Color(0xFF212121),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(36.0),
@@ -294,7 +347,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   size: 25,
                   // color: Colors.white,
                 ),
-                color: Colors.white,
+                color: Color(0xFF212121),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(36.0),
@@ -315,9 +368,8 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                 child: Icon(
                   Icons.directions,
                   size: 25,
-                  // color: Colors.white,
                 ),
-                // color: Colors.white,
+                color: Color(0xFF212121),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(36.0),
@@ -333,6 +385,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   elevation: 90.0,
                   padding: const EdgeInsets.all(0.0),
                   onPressed: () {
+                    //slideSheet();
                     showAsBottomSheet();
                   },
                   child: Container(
@@ -342,7 +395,10 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                     width: 110,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.red[400], Colors.red[300]],
+                        colors: [
+                          Colors.red[400],
+                          Colors.red[600],
+                        ],
                       ),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(300.0),
