@@ -80,24 +80,42 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
           snappings: [0.4, 0.7, 1.0],
           positioning: SnapPositioning.relativeToAvailableSpace,
         ),
+        headerBuilder: (context, state) {
+          return Container(
+            margin: const EdgeInsets.only(left: 0.0, right: 0.0),
+            height: 56,
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: Text(
+              'My locations list',
+              style: Theme.of(context)
+                  .textTheme
+                  .body1
+                  .copyWith(color: Color(0xFF212121), fontSize: 16.0),
+            ),
+          );
+        },
         builder: (context, state) {
           return Container(
             width: double.infinity,
-            height: 700,
+            height: 3000,
             child: Center(
               child: Material(
                 child: InkWell(
-                  onTap: () => Navigator.pop(context, 'This is the result.'),
+                  // onTap: () => Navigator.pop(context, 'This is the result.'),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: ReorderableListView(
+                      //padding: EdgeInsets.symmetric(horizontal: 10),
                       onReorder: (int oldIndex, int newIndex) {},
-                      header: Text('My location list'),
                       children: [
                         // for (final item in myItems)
-
                         Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
                           color: Color(0xFF212121),
+                          elevation: 10,
                           key: ValueKey('dd'),
                           child: ListTile(
                             leading:
@@ -112,9 +130,12 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                           ),
                         ),
                         Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
                           color: Color(0xFF212121),
+                          elevation: 10,
                           key: ValueKey('dd'),
-                          elevation: 2,
                           child: ListTile(
                             leading:
                                 Icon(Icons.location_pin, color: Colors.white),
@@ -135,16 +156,6 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
             ),
           );
         },
-        // headerBuilder: (context, state) {
-        //   return Container(
-        //     width: double.infinity,
-        //     alignment: Alignment.center,
-        //     child: Icon(
-        //       Icons.arrow_upward,
-        //       size: 15,
-        //     ),
-        //   );
-        // },
       );
     });
   }
@@ -271,7 +282,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   _onMapTypeButtonPressed();
                 },
                 child: Icon(Icons.layers, size: 25, color: Colors.white),
-                color: Color(0xFF212121),
+                color: Colors.grey[850],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(36.0),
@@ -294,7 +305,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   Icons.menu,
                   size: 25,
                 ),
-                color: Color(0xFF212121),
+                color: Colors.grey[850],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(36.0),
@@ -316,7 +327,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   Icons.location_on,
                   size: 25,
                 ),
-                color: Color(0xFF212121),
+                color: Colors.grey[850],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(36.0),
@@ -338,7 +349,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   Icons.search,
                   size: 25,
                 ),
-                color: Color(0xFF212121),
+                color: Colors.grey[850],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(36.0),
@@ -361,7 +372,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   size: 25,
                   // color: Colors.white,
                 ),
-                color: Color(0xFF212121),
+                color: Colors.grey[850],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(36.0),
@@ -383,7 +394,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                   Icons.directions,
                   size: 25,
                 ),
-                color: Color(0xFF212121),
+                color: Colors.grey[850],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(36.0),
@@ -410,7 +421,7 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Colors.red[400],
+                          Colors.red[300],
                           Colors.red[600],
                         ],
                       ),
