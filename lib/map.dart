@@ -61,12 +61,42 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(currentLocation.latitude, currentLocation.longitude),
-          zoom: 15.0,
+          zoom: 10.0,
           tilt: 50.0,
           bearing: 45.0,
         ),
       ),
     );
+  }
+
+  List<Model> modelList;
+
+  @override
+  void initState() {
+    super.initState();
+    modelList = [];
+    var titleList = <String>['Title A', 'Title B', 'Title C'];
+    var subTitleList = <String>['SubTitle A', 'SubTitle B', 'SubTitle C'];
+    for (int i = 0; i < 3; i++) {
+      Model model = Model(
+        title: titleList[i],
+        subTitle: subTitleList[i],
+        key: i.toString(),
+      );
+      modelList.add(model);
+    }
+  }
+
+  void _updateMyItems(int oldIndex, int newIndex) {
+    if (newIndex > oldIndex) {
+      newIndex -= 1;
+
+      final Model model = modelList.removeAt(oldIndex);
+
+      setState(() {
+        modelList.insert(newIndex, model);
+      });
+    }
   }
 
   void showAsBottomSheet() async {
@@ -104,53 +134,98 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
                 child: InkWell(
                   // onTap: () => Navigator.pop(context, 'This is the result.'),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: ReorderableListView(
-                      //padding: EdgeInsets.symmetric(horizontal: 10),
-                      onReorder: (int oldIndex, int newIndex) {},
-                      children: [
-                        // for (final item in myItems)
-                        Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          color: Color(0xFF212121),
-                          elevation: 10,
-                          key: ValueKey('dd'),
-                          child: ListTile(
-                            leading:
-                                Icon(Icons.location_pin, color: Colors.white),
-                            title: Text(
-                              'Welcome to Flutter Tutorial.',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
+                      padding: const EdgeInsets.all(16),
+                      child: ReorderableListView(
+                        //padding: EdgeInsets.symmetric(horizontal: 10),
+                        onReorder: _updateMyItems,
+                        children: modelList.map((Model model) {
+                          // for (final item in myItems)
+                          // Card(
+                          //   shape: RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.circular(15.0),
+                          //   ),
+                          //   color: Color(0xFF212121),
+                          //   elevation: 10,
+                          //   key: ValueKey('dd'),
+                          //   child: ListTile(
+                          //     leading:
+                          //         Icon(Icons.location_pin, color: Colors.white),
+                          //     title: Text(
+                          //       'Welcome to Flutter Tutorial.',
+                          //       style: TextStyle(
+                          //         color: Colors.white,
+                          //       ),
+                          //     ),
+                          //     onTap: () => {},
+                          //   ),
+                          // ),
+                          return Card(
+                            key: Key(model.key),
+                            color: Colors.redAccent[400],
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Ink.image(
+                                //     image: null, height: 150, fit: BoxFit.fitWidth)
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 4, top: 4, right: 4, bottom: 4),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ListTile(
+                                        leading: Icon(
+                                          Icons.location_pin,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
+                                        title: Text(
+                                          model.title,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        subtitle: Text(
+                                          model.subTitle,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        onTap: () => {},
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
-                            onTap: () => {},
-                          ),
-                        ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          color: Color(0xFF212121),
-                          elevation: 10,
-                          key: ValueKey('dd'),
-                          child: ListTile(
-                            leading:
-                                Icon(Icons.location_pin, color: Colors.white),
-                            title: Text(
-                              'Welcome to Flutter Tutorial.',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                            onTap: () => {},
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+
+                            // Card(
+                            //   shape: RoundedRectangleBorder(
+                            //     borderRadius: BorderRadius.circular(15.0),
+                            //   ),
+                            //   color: Color(0xFF212121),
+                            //   elevation: 10,
+                            //   key: ValueKey('dd'),
+                            //   child: ListTile(
+                            //     leading:
+                            //         Icon(Icons.location_pin, color: Colors.white),
+                            //     title: Text(
+                            //       'Welcome to Flutter Tutorial.',
+                            //       style: TextStyle(
+                            //         color: Colors.white,
+                            //       ),
+                            //     ),
+                            //     onTap: () => {},
+                            //   ),
+                            // ),
+                          );
+                        }).toList(),
+                      )),
                 ),
               ),
             ),
@@ -451,4 +526,16 @@ class _MyAppState extends State<MyMap> with TickerProviderStateMixin {
       ),
     );
   }
+}
+
+class Model {
+  final String title;
+  final String subTitle;
+  final String key;
+
+  Model({
+    @required this.title,
+    @required this.subTitle,
+    @required this.key,
+  });
 }
