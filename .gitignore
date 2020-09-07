@@ -47,7 +47,12 @@ analysis_benchmark.json
 **/doc/api/
 .dart_tool/
 *.flutter-plugins
+*.flutter-plugins 2
+*.flutter-plugins 3
+*.flutter-plugins
 *.flutter-plugins-dependencies
+*.flutter-plugins-dependencies 2
+*.flutter-plugins-dependencies 3
 **/generated_plugin_registrant.dart
 *.packages
 *.pub-cache/
